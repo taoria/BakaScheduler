@@ -1,0 +1,54 @@
+﻿<Window x:Class="BakaScheduler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakaScheduler"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="222" Width="214.659" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="Manual" Left="1000" Top="50">
+    <Window.Background>
+
+        <ImageBrush/>
+    </Window.Background>
+    <Window.ContextMenu>
+        <ContextMenu Name="cm" 
+StaysOpen="true">
+            <MenuItem Header="查看时间表"/>
+            <MenuItem Header="修改时间表"/>
+            <MenuItem Header="制作图片状态机" Click="MenuItem_Click_1"/>
+            <MenuItem  Header="设置" Click="MenuItem_Click"/>
+        </ContextMenu>
+    </Window.ContextMenu>
+    <Grid MouseLeave="Grid_MouseLeave" MouseEnter="Grid_MouseEnter" Height="94" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="146">
+
+        <Grid.Background>
+
+
+            <ImageBrush ImageSource="background.png"/>
+        </Grid.Background>
+        <Grid.Effect>
+
+            <DropShadowEffect/>
+        </Grid.Effect>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="313*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Name="dialog_grid" Opacity="0">
+            <Image x:Name="dialog_png" Margin="10,-96,-108,83" Source="dialog.png" Stretch="Fill" HorizontalAlignment="Left" Width="244"/>
+            <Label Name="talk" Background="{x:Null}" Margin="85,-77,-47,91" Foreground="#FF4B4B4B" FontSize="15" FontFamily="Magneto" RenderTransformOrigin="0.5,0.5">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="-2.907"/>
+                        <RotateTransform Angle="-8.787"/>
+                        <TranslateTransform Y="-5.561"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+                Hello world
+            </Label>
+        </Grid>
+
+
+    </Grid>
+
+</Window>
