@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System.Windows;
 using System.Reflection;
 using System.Windows.Controls;
@@ -8,112 +8,6 @@ using System.Threading;
 using System.Windows.Media.Animation;
 
 namespace BakaScheduler {
-    /// <summary>
-    /// </summary>
-    ///
-
-
-    //    interface Anim {
-    //       void Refresh();
-    //       int RuningState
-    //        {
-    //            get;
-    //            set;
-    //        }
-
-
-    //}
-    //    class AnimState {
-    //        public static int STATE_OPENING = 1;
-    //        public static int STATE_CLOSING = 2;
-    //    }
-
-    //    class DialogTransAnim:Anim{
-    //        Image m;
-    //        public delegate void AnimOp(Image i,double op);
-    //        public AnimOp aop;
-    //        int targetOp;
-    //        double thisOp;
-    //        int state;
-    //        public int RuningState
-    //        {
-    //            get
-    //            {
-    //                return state;
-    //            }
-    //            set
-    //            {
-    //                state = value;
-    //            }
-    //        }
-    //        public DialogTransAnim(Image m) {
-
-
-    //        }
-    //        public static void AnimSetOp(Image m,double i)
-    //        {
-
-    //            m.Opacity = i;
-    //        }
-
-    //        public DialogTransAnim(Image a,int ta) {
-    //            m = a;
-    //            state = -1;
-    //            aop = new AnimOp(AnimSetOp);
-    //            thisOp = m.Opacity;
-    //            targetOp = ta;
-    //        }
-    //        public void Refresh() {
-    //            if (state == AnimState.STATE_OPENING) {
-
-    //                if (thisOp < targetOp - 4)
-    //                   thisOp += 4;
-    //                else
-    //                    state = -1;
-
-    //            }
-    //            else if(state== AnimState.STATE_CLOSING) {
-    //                if (thisOp > 4)
-    //                    thisOp -= 4;
-    //                else
-    //                    state = -1;
-
-    //            }
-    //            aop.Invoke(m, thisOp);
-    //        }
-    //    }
-    //    class AnimManager {
-    //        public static AnimManager globalAnimManager;
-    //        Dictionary<string, Anim> dc = new Dictionary<string, Anim>();
-    //        Thread a = new Thread(RefreshAll);
-    //        public void AddAnim(string s,Anim a){
-    //            dc.Add(s, a);
-    //        }
-
-    //        public AnimManager() {
-    //            a.Start();
-    //        }
-    //        public void SetAnimState(string s ,int state) {
-    //            Anim tag = dc[s];
-    //            if (tag == null) throw null;
-    //            dc[s].RuningState = state;
-
-    //        }
-    //        public static void  RefreshAll() {
-    //            while (true) {
-    //                int sum = 0;
-    //                foreach (var a in globalAnimManager.dc) {
-    //                    Anim b = a.Value;
-    //                    if (b.RuningState != -1)
-    //                        b.Refresh();
-    //                    sum += b.RuningState;
-    //                }
-    //                Thread.Sleep(33);
-    //            }
-
-    //        }
-
-    //    }
     class WordsUnit {
         public int consNum; //约束条件
       
@@ -123,6 +17,17 @@ namespace BakaScheduler {
         public WordsList(string file) {
         }
     }
+    class DialogAnimation {
+        static DoubleAnimation da = new DoubleAnimation();
+        public static void ObjectOpacityTrans(float start, float end, float second, UIElement fe) {
+            da.From = start;
+            da.To = end;
+            da.Duration = TimeSpan.FromSeconds(second);
+            fe.BeginAnimation(UIElement.OpacityProperty, da);
+        }
+
+    }
+
     class WordsManager {
         Dictionary<string, WordsList> dw = new Dictionary<string, WordsList>();
     }
@@ -150,21 +55,13 @@ namespace BakaScheduler {
             HKCU.Close();
         }
         public void ShowUpDialog() {
-            DoubleAnimation da = new DoubleAnimation();
-            
-            da.From = 0;    //起始值
-            da.To = 0.66;      //结束值
-            da.Duration = TimeSpan.FromSeconds(0.5);         //动画持续时间
-            dialog_grid.BeginAnimation(Grid.OpacityProperty, da);//开始动画
+            DialogAnimation.ObjectOpacityTrans(0, 0.66f, 0.5f, dialog_grid);
+        }
 
+         public void ShutDownDialog() {
+            DialogAnimation.ObjectOpacityTrans(0.66f,0 , 0.5f, dialog_grid);
         }
-        public void ShutDownDialog() {
-            DoubleAnimation da = new DoubleAnimation();
-            da.From = 0.66;    
-            da.To = 0;
-            da.Duration = TimeSpan.FromSeconds(0.2);
-            dialog_grid.BeginAnimation(Grid.OpacityProperty, da);
-        }
+
 
 
         public MainWindow() {
